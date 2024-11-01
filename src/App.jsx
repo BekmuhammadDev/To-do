@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { tableTitles } from "../src/mocks/table-date";
+import { ToastContainer, toast } from 'react-toastify';
+import { tableTitles } from "@mocks/index";
+import { formatDate } from "./utils";
 import MainLayout from "@layouts/main-layout"
 import Section from "@layouts/section";
 import Container from "@layouts/container";
@@ -27,9 +29,10 @@ const App = () => {
     if (newTask.title.trim().length) {
       setTodo([...todo, newTask]);
       setTitle('');
+      toast.success("Successfully added new task!",{autoClose:3000})
 
     } else {
-      alert('Task title cannot be empty');
+      toast.warning('Task title cannot be empty',{autoClose:3000});
     }
 
   }
@@ -37,6 +40,7 @@ const App = () => {
   const deleteTask = (id) => {
     const currentTodo = todo.filter((item) => item.id != id)
     setTodo(currentTodo)
+    toast.info("Successfully deleted task!",{autoClose:2000})
 
   }
   const editTask = (id, val) => {
@@ -53,15 +57,17 @@ const App = () => {
       if (item.id == id) {
         item.title = currentTitle;
         setShowModal(false);
+        toast.success("Task updated successfully!",{autoClose:2000})
       }
     })
 
   }
 
-
-
   return (
     <MainLayout>
+
+      <ToastContainer/>
+
       <Section id="main">
 
         <Modal
@@ -111,7 +117,7 @@ const App = () => {
                     <Trow className="tr h-[50px] " key={item.id}>
                       <Td>{index + 1}</Td>
                       <Td>{item.title}</Td>
-                      <Td>{item.created_at}</Td>
+                      <Td>{formatDate(item.created_at)}</Td>
                       <Td>
                         <Button 
                         fun={() => editTask(item.id, item.title)} 

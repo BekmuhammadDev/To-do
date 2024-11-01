@@ -28,7 +28,7 @@ const Modal = ({ className, saveEdited,show,setShow,title,setTitle }) => {
                 <div className="flex btn-group">
 
                     <Button fun={saveEdited} className="save" title='save'/>
-                    <Button fun={setShow} className="cancel" title='cancel'/>
+                    <Button fun={()=>setShow(false)} className="cancel" title='cancel'/>
                 </div>
             </div>
         </div>
